@@ -15,7 +15,7 @@ class Register extends Component {
         this.state = {
             userName: '',
             userPrenom: '',
-            userTelephone: '',
+            // userTelephone: '',
             userEmail: '',
             userPassword: ''
         }
@@ -44,12 +44,12 @@ class Register extends Component {
         const { userPrenom } = this.state;
         const { userEmail } = this.state;
         const { userPassword } = this.state;
-        const { userTelephone } = this.state;
+        // const { userTelephone } = this.state;
 
-        if (userName.length == 0 || userPrenom.length == 0 || userPassword.length == 0 || userTelephone.length==0) {
+        if (userName.length == 0 || userPrenom.length == 0 || userPassword.length == 0 ) {
             alert("text input empty")
         } else {
-            if (!userEmail.includes("@")) {
+            if (!userEmail.includes("@") && (!userEmail.includes("."))) {
                 alert("enter email correctly")
             } else {
 
@@ -58,24 +58,13 @@ class Register extends Component {
                     prenom: userPrenom,
                     email: userEmail,
                     pass: userPassword,
-                    tel: userTelephone,
+                    // tel: userTelephone,
                 }
                 await axios.post('http://gamliel.tobedev.com/api/server.php', {
 
-                    // mode: 'cors',
-                    // method: 'POST',
-                    header: {
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json',
-                        'Access-Control-Allow-Origin': '*',
-                        // 'Access-Control-Allow-Headers':'*'
-
-                    },
-
-
                     data: Data
                 })
-                    .then((response) => response.data === "new row added" ? retour = "succses" : alert("email deja enregistrer"))
+                    .then((response) => response.data === "new row added" ? retour = "succses" : alert("erreur de connection"))
 
                     .catch((error) => {
                         // console.error(error.message);
@@ -122,7 +111,7 @@ class Register extends Component {
                     style={styles.inputBox}
 
                 />
-                <TextInput underlineColorAndroid='rgba(0,0,0,0)'
+                {/* <TextInput underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="enter your Telephone Number"
                     placeholderTextColor="#ffffff"
                     style={styles.inputBox}
@@ -131,7 +120,7 @@ class Register extends Component {
 
                     onChangeText={userTelephone => this.setState({ userTelephone })}
 
-                />
+                /> */}
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="enter password"
                     returnKeyType="go"

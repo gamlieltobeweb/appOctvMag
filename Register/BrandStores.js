@@ -13,6 +13,7 @@ let result;
 let responsable;
 let name = []
 let arr = []
+let email;
 
 let a;
 class BrandStores extends Component {
@@ -35,7 +36,16 @@ class BrandStores extends Component {
         after = sliceString.replace("succesly entry", "")
 
         console.log("after", after)
-        return after
+        
+        if (after == [null] ) {
+            console.log("in")
+            after == ""
+            
+        }else{
+
+            return after
+        }
+        // console.log("after", after)
 
     }
 
@@ -43,6 +53,7 @@ class BrandStores extends Component {
     async componentDidMount() {
 
         console.log("Props", this.props.route.params.userEmail)
+        email = this.props.route.params.userEmail
         await axios.post('http://localhost/Octv/DetailStore.php', {
             data: this.props.route.params.userEmail
 
@@ -78,7 +89,9 @@ class BrandStores extends Component {
     addComponent = async () => {
 
         console.log("BransProps", this.props)
-        this.props.navigation.navigate('StoreDetails');
+        this.props.navigation.navigate('StoreDetails', {
+            email: email
+        });
 
     }
 

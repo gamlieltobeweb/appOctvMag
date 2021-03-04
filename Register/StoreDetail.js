@@ -1,19 +1,15 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, TextInput, TouchableOpacity, Button, Image } from 'react-native'
-import Select from 'react-select';
-// import RNPickerSelect from 'react-native-picker-select';
+import { Text, StyleSheet, View, TextInput, TouchableOpacity, ScrollView } from 'react-native'
+import RNPicker from "rn-modal-picker";
 
 import { useNavigation } from '@react-navigation/native';
 
 import axios from 'axios'
 
 let retour;
+let email;
 
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-];
+
 
 export default class StoreDetails extends Component {
     constructor(props) {
@@ -23,17 +19,33 @@ export default class StoreDetails extends Component {
             NameResponsible: '',
             storeCode: '',
             storeAdress: '',
-            emailMagasin:'',
+            emailMagasin: '',
+            telephone: '',
             language: 'java',
-            selectedOption: null,
         }
     }
-    handleChange = selectedOption => {
-        this.setState({ selectedOption });
-        console.log(`Option selected:`, selectedOption);
-    };
 
-    
+    async componentDidMount() {
+
+        await axios.get('http://localhost/Octv/ingoMagasin.php', {
+
+            // succesly entry
+        }).then((response) => {
+            console.log("resppnce datas", response.data)
+            // if (response.data.includes("succesly entry")) {
+            //     console.log("bien reussi")
+            //     result = "succses"
+            // } else {
+            //     return result = "error"
+            // }
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
+   
+
+
 
     main = async () => {
         let a = await this.userRegister()
@@ -59,12 +71,15 @@ export default class StoreDetails extends Component {
         const { storeCode } = this.state;
         const { storeAdress } = this.state;
         const { emailMagasin } = this.state;
+        const { telephone } = this.state;
 
-        if (storeName.length == 0 || NameResponsible.length == 0 || storeCode.length == 0 || storeAdress.length == 0) {
+        if (storeName.length == 0 ||
+            NameResponsible.length == 0 ||
+            storeCode.length == 0 ||
+            storeAdress.length == 0 ||
+            telephone.length == 0 || (!isNaN(telephone))) {
             alert("text input empty")
         } else {
-
-
 
             let Data = {
                 nom: storeName,
@@ -72,15 +87,17 @@ export default class StoreDetails extends Component {
                 codemagasin: storeCode,
                 adresse: storeAdress,
                 emailMagasin: emailMagasin,
+                telephone: telephone,
+                email: this.props.route.params.email
+
             }
 
-            console.log("dataMagasin",Data)
-            await axios.post('http://gamliel.tobedev.com/api/store.php', {
-
-
-
-                data: Data
-            })
+            console.log("dataMagasin", Data)
+            await axios.post('http://gamliel.tobedev.com/api/store.php',
+                {
+                    data: Data
+                })
+                // .then((response) => console.log("responsestoredata",response.data))
                 .then((response) => response.data === "new row added" ? retour = "succses" : alert("ereur"))
 
                 .catch((error) => {
@@ -88,11 +105,10 @@ export default class StoreDetails extends Component {
                     console.log(error.message)
                     // alert("debile",error.message)
                 });
-
+            console.log("retourStore", retour)
         } return retour
     }
     render() {
-        const { selectedOption } = this.state;
 
         return (
             // <View>
@@ -127,6 +143,16 @@ export default class StoreDetails extends Component {
 
                 />
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
+                    placeholder="entrer votre telephone"
+                    placeholderTextColor="#ffffff"
+                    style={styles.inputBox}
+                    selectionColor='#fff'
+                    returnKeyType="next"
+
+                    onChangeText={telephone => this.setState({ telephone })}
+
+                />
+                <TextInput underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="entrer adress magasin"
                     placeholderTextColor="#ffffff"
                     style={styles.inputBox}
@@ -146,13 +172,8 @@ export default class StoreDetails extends Component {
                     onChangeText={emailMagasin => this.setState({ emailMagasin })}
 
                 />
-                {/* <Select
-                    value={selectedOption}
-                    onChange={this.handleChange}
-                    options={options}
-                    placeholder={"choisi ta ville"}
-                    styles={styles.select}
-                /> */}
+                <RNPicker/>
+               
 
                 {/* <TouchableOpacity style={styles.button} onPress={this.userRegister}  > */}
                 <TouchableOpacity style={styles.button} onPress={this.main}  >
@@ -162,7 +183,7 @@ export default class StoreDetails extends Component {
 
 
                 </TouchableOpacity>
-{/* 
+                {/* 
                 <TouchableOpacity onPress={this.addComponet}>
 
                     <Image style={styles.image} source={require('../images/logoPlus.png')} />
