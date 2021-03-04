@@ -1,14 +1,69 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+const Stack = createStackNavigator();
+
+import HomePage from './Home/HomePage'
+
+
+
+import StoreDetails from './Register/StoreDetail'
+import BillingStore from './Register/BillingStore'
+import BrandStores from './Register/BrandStores'
+import DeliveryDetail from './Register/DeliveryDetail'
+
+
+import Login from './pages/Login'
+import SignUp from './pages/signUp'
+import Forgot from './pages/Forgot'
+import VerificationPassword from './pages/verificationPassword'
+import VerificationNumber from './pages/verificationNumber'
+import Home from './pages/Home'
+
+
+
+
+export default class App extends Component {
+
+  render() {
+
+    return (
+
+      // <View>
+
+      //   <BrandStores/>
+      // </View>
+      <NavigationContainer>
+        <Stack.Navigator>
+
+
+          <Stack.Screen options={{
+            headerStyle: { backgroundColor: '#455a' }, headerTintColor: '#125487', headerTitleStyle: {
+              fontWeight: 'bold'
+            }, title: "bienvenu"
+          }} name="Login" component={Login} />
+
+          <Stack.Screen name="StoreDetails" component={StoreDetails} />
+          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="Forgot" component={Forgot} />
+          <Stack.Screen name="VerificationNumber" component={VerificationNumber} />
+          <Stack.Screen name="VerificationPassword" component={VerificationPassword} />
+          <Stack.Screen name="Home" component={Home} />
+          {/* <Stack.Screen name="HomePage" component={HomePage} /> */}
+
+
+          <Stack.Screen name="BrandStores" component={BrandStores} />
+          <Stack.Screen name="DeliveryDetail" component={DeliveryDetail} />
+          <Stack.Screen name="BillingStore" component={BillingStore} />
+
+        </Stack.Navigator>
+
+      </NavigationContainer>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
