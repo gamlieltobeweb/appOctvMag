@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, Image, TouchableOpacity, ActivityIndicator, Button, Modal, SafeAreaView, FlatList } from 'react-native'
-// import Modal from 'react-native-modal'
-
+import Logo from '../components/Logo'
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -14,8 +13,13 @@ let responsable;
 let name = []
 let arr = []
 let email;
+let message;
+let temps;
+let temp;
+let event;
+let res;
 
-let a;
+let nomResponsable;
 class BrandStores extends Component {
     constructor(props) {
         super(props)
@@ -24,66 +28,116 @@ class BrandStores extends Component {
             email: '',
             animating: true,
             show: false,
-            ViewName: []
+            ViewName: [],
+            event: ''
         }
     }
 
 
     viewDetails = async () => {
-
         let sliceString = responsable
 
-        after = sliceString.replace("succesly entry", "")
+        console.log("tt", typeof (responsable))
+
+        after = sliceString.replace("Array", "")
 
         console.log("after", after)
-        
-        if (after == [null] ) {
-            console.log("in")
-            after == ""
-            
-        }else{
+        console.log("aftertt", typeof (after))
 
-            return after
-        }
-        // console.log("after", after)
+        // if (after == '[null]') {
+        //     console.log("in")
+        //     after = "vous n'avez aucun magasin"
+
+        // } else {
+        //     return after
+        // }
+
+        after == '[null]' ? after = "Vous n'avez aucun magasin inscris" : after
+        console.log("afterafter", after)
+
+
+        after = after.slice(0, -1);
+        temps = after.split(',')
+
+        // console.log(rev(a))
+
+        console.log("tempsType", typeof (temps))
+        console.log("temps", temps)
+        console.log("tempsLength", temps.length)
+
+
+        return temps
 
     }
 
+    arrayfunc = () => {
+        // let a = after
+        console.log("afterArray", after)
+
+        var convertarray = Array.from(after)
+        let resultArray = convertarray.join('')
+
+        console.log("resultArray", resultArray)
+        console.log("resultArray", typeof (resultArray))
+        // resultArray.map()
+        return resultArray
+    }
+
+
+
+    view = () => {
+        console.log("viewbrand", this.props)
+        this.props.navigation.navigate('DeliveryDetail', {
+            email: email,
+            event: this.state.event
+        });
+    }
 
     async componentDidMount() {
 
         console.log("Props", this.props.route.params.userEmail)
         email = this.props.route.params.userEmail
-        await axios.post('http://localhost/Octv/DetailStore.php', {
+        await axios.post('http://gamliel.tobedev.com/api/DetailStore.php', {
+
             data: this.props.route.params.userEmail
 
-            // succesly entry
+
         }).then((response) => {
-            console.log("resppnce datas", typeof(response.data))
+            console.log("resppnce datas", response.data)
             responsable = response.data
-            if (response.data.includes("succesly entry")) {
-                console.log("bien reussi")
-                result = "succses"
+
+            if (response.data == null) {
+                message = "nous n'avez aucun magasin inscris"
             } else {
-                return result = "error"
+
+                if (response.data.includes("succesly entry")) {
+                    console.log("bien reussi")
+                    result = "succses"
+                } else {
+                    return result = "error"
+                }
             }
         }).catch(err => {
             console.log(err)
         })
-        a = await responsable
-        console.log("responsable", a)
+        nomResponsable = await responsable
+        console.log("responsable", nomResponsable)
         name = await this.viewDetails()
 
         await this.setState({ ViewName: name })
 
+        res = await this.arrayfunc()
+
+        console.log("res", res)
+
         console.log("namemagasin", name)
         console.log("bbbbbbbbbb", this.state.ViewName)
-
-        if (name) {
+        if (after) {
             this.setState({ animating: false })
         }
 
-        console.log(this.state.animating)
+        console.log("state", this.state.animating)
+
     }
 
     addComponent = async () => {
@@ -94,41 +148,46 @@ class BrandStores extends Component {
         });
 
     }
-
-    displayView = async () => {
-
-        for (let i = 0; i < name.length; i++) {
-
-
-        }
-        // await this.state.ViewName.map(e => {
-        //     return <View> <Text>{e}</Text></View>
-        // })
+    press = async (event) => {
+        console.log("event", event)
+        await this.setState({ event: event })
+        await this.view()
     }
-    openModal = () => {
-        this.setState({
-            show: !this.state.show
-        })
-    }
-
 
 
     render() {
+        console.log("stateall", this.state)
 
         return (
 
-
             <View style={styles.container}>
+                <Logo />
                 {/* <FlatList data={rendu}  renderItem={(e => <Text>{e}</Text>)}>  </FlatList> */}
+                {/* {name ? <ActivityIndicator size="large" color="#000" />:null} */}
 
-                <Text>{after}</Text>
+                {this.state.animating == false ? (
+                    <View>
+                        {/* <TouchableOpacity onPress={this.view}> */}
+                        <Text style={styles.textmag}>Mes Magasin</Text>
+                        <Text style={styles.textmagasin}>
+                            {/* {after} */}
+
+                        </Text>
+                        {temps.map((event, i) => { return <Button key={i} onPress={() => { this.press(event) }} title={event}>{event}</Button> })}
+                        {/* {temps.map((event, i) => <Button key={i} onPress={() => { this.setState({event:event}) }} title={event}></Button>)} */}
+                        {/* </TouchableOpacity> */}
+                    </View>
+                ) : (
+                    <ActivityIndicator style={styles.activity} size="large" color="#000" />
+                )}
+
 
 
                 {/* <StoreDetail/> */}
 
-                <TouchableOpacity onPress={this.addComponent}>
+                <TouchableOpacity  onPress={this.addComponent}>
 
-                    <Image style={styles.image} source={require('../images/logoPlus.png')} />
+                    <Image style={styles.image} source={require('../images/tel.png')} />
                 </TouchableOpacity>
 
 
@@ -152,23 +211,42 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     image: {
-        flex: 1,
-        width: 70,
-        height: 70,
-        marginLeft: 290,
-        marginTop: 470,
-
-    },
-    modal: {
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#00ff00',
-        padding: 100
+        top: 50,
+        left: 90,
+        right: 90,
+        width: 200,
+        height: 190,
+        marginLeft: 90,
+        marginTop: 90,
 
     },
     text: {
         marginTop: 10,
         fontWeight: 'bold',
 
+    },
+    activity: {
+        top: 120
+    }
+    , textmagasin: {
+        top: 30,
+        fontWeight: 'bold',
+        color: 'red',
+        fontSize: 30
+
+    },
+    textmag: {
+        top: 30,
+        fontWeight: 'bold',
+        color: '#000',
+        fontSize: 10
+
+    },
+    touch: {
+
+        margin: 0,
+        padding: 0,
+        borderColor: '#000',
+        bottom: 40
     }
 });

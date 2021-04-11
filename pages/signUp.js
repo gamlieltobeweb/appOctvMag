@@ -4,7 +4,6 @@ import { Text, StyleSheet, View, TouchableOpacity } from 'react-native'
 
 
 import Logo from '../components/Logo'
-import Form from '../components/Form'
 
 import Register from '../components/Register'
 
@@ -18,7 +17,7 @@ export default function SignUp ({navigation}) {
                 <Register   />
                 <View style={styles.SingupText}>
                     <Text style={styles.TextLogin}>Already have an account??</Text>
-                    <TouchableOpacity onPress={()=>navigation.navigate('Login')}>
+                    <TouchableOpacity onPress={()=>navigation.goBack()}>
 
                         <Text style={styles.SignUpButton}>Sing in</Text>
                     </TouchableOpacity>

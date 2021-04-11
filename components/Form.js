@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, TextInput, TouchableOpacity, Button } from 'react-native'
-import SignUp from '../pages/signUp'
 
 import { useNavigation } from '@react-navigation/native';
 

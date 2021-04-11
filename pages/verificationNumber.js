@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, TextInput, TouchableOpacity } from 'react-native'
+import { Text, StyleSheet, View, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
+import { TextInput } from 'react-native-paper';
 
 let email;
 
@@ -42,11 +43,9 @@ class VerificationNumber extends Component {
             <View style={styles.container}>
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="enter your number"
-                    placeholderTextColor="#ffffff"
                     style={styles.inputBox}
                     selectionColor='#fff'
                     keyboardType='number-pad'
-                    // onSubmitEditing={() => this.password.focus()}
                     onChangeText={NumberVerification => this.setState({ NumberVerification })}
 
                 />
@@ -73,44 +72,44 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "#749890",
         flex: 1,
-        // justifyContent: 'center',
-        // marginLeft:290,
-        // alignContent: 'center',
-        borderRadius: 20,
-        borderColor: "#000",
-        borderWidth: 4,
-        borderRadius: 6,
-        margin: 80,
-        padding: 80,
-        marginLeft: 255,
-        marginRight: 255,
-        marginTop: 250,
+        justifyContent: 'center',
+        borderRadius: 4,
+        margin: 30,
+        padding: 130,
+        marginTop: 150,
         alignItems: 'center'
     },
     inputBox: {
-        width: 300,
-        backgroundColor: '#000',
-        opacity: 0.3,
-        borderRadius: 25,
-        paddingHorizontal: 16,
-        fontSize: 16,
-        color: '#ffffff',
-        marginVertical: 10,
+        // bottom:30,
+        padding:28,
+        width: 250,
+        height:18,
+        backgroundColor: '#f26874',
+        // opacity: 0.3,
+        // borderRadius: 9,
+        // paddingHorizontal: 16,
+        fontSize: 17,
+        fontWeight: 'bold',
+        // color: '#ff0258',
+        marginVertical: 60,
 
 
     },
     buttonText: {
         fontSize: 16,
-        fontWeight: '500',
+        // fontWeight: '500',
         color: '#ffffff',
-        marginLeft: 130,
-        paddingVertical: 12
+        marginLeft: 60,
+        bottom: 10,
+        // paddingVertical: 1,
+        justifyContent: 'center'
     },
     button: {
-        width: 300,
+        width: 160,
         backgroundColor: '#1c313a',
-        borderRadius: 25,
-        marginVertical: 20,
-        paddingVertical: 10,
+        borderRadius: 10,
+        marginVertical: 25,
+        paddingVertical: 20,
+        margin: -60,
     },
 })

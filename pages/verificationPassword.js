@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, TextInput, TouchableOpacity } from 'react-native'
+import { Text, StyleSheet, View, TouchableOpacity } from 'react-native'
+import { TextInput } from 'react-native-paper';
+
 import { useNavigation } from '@react-navigation/native';
+import Login from '../pages/Login'
 
 import axios from 'axios'
 let myEmail;
@@ -11,6 +14,8 @@ let result;
 class VerificationPassword extends Component {
     constructor(props) {
         super(props)
+        this.myres = React.createRef()
+        this.myres1 = React.createRef()
         this.state = {
 
             userPassword: '',
@@ -30,7 +35,7 @@ class VerificationPassword extends Component {
 
     navigatePassword = () => {
         console.log("props forgot", this.props)
-        this.props.navigation.navigate('Home', {
+        this.props.navigation.navigate('Login', {
             Uemail: this.state.userEmail,
             name:name
         });
@@ -59,20 +64,8 @@ class VerificationPassword extends Component {
                 }
                 await axios.post('http://gamliel.tobedev.com/api/confirmPassowrd.php', {
 
-                    // mode: 'cors',
-                    // method: 'POST',
-                    header: {
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json',
-                        // 'Access-Control-Allow-Origin': '*',
-                        // 'Access-Control-Allow-Headers': '*'
-
-                    },
-
-
                     data: Data
 
-                    // succesly entry
                 }).then((response) => {
                     console.log("resppnce datas", response.data)
                     name = response.data
@@ -90,20 +83,23 @@ class VerificationPassword extends Component {
         return (
             <View style={styles.container}>
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
-                    placeholder="enter the new password"
+                    placeholder="Enter New Password"
                     placeholderTextColor="#ffffff"
                     secureTextEntry={true}
-                    // ref = {(input)=> {this.password = input}}
+                    returnKeyType="next"
                     onChangeText={userPassword => this.setState({ userPassword })}
+                    onSubmitEditing={(() => this.myres.current.focus())}
                     style={styles.inputBox}
 
                 />
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
-                    placeholder="confirm the new password"
+                    placeholder="Confirm New Password"
                     placeholderTextColor="#ffffff"
                     secureTextEntry={true}
-                    // ref = {(input)=> {this.password = input}}
+                    returnKeyType="go"
                     onChangeText={userPassword2 => this.setState({ userPassword2 })}
+                    // onSubmitEditing={(() => this.myres1.current.focus())}
+                    ref={this.myres}
                     style={styles.inputBox}
 
                 />
@@ -129,45 +125,44 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "#749890",
         flex: 1,
-        // justifyContent: 'center',
         // marginLeft:290,
-        // alignContent: 'center',
+        alignContent: 'center',
         borderRadius: 20,
         borderColor: "#000",
         borderWidth: 4,
         borderRadius: 6,
-        margin: 80,
-        padding: 80,
-        marginLeft: 255,
-        marginRight: 255,
-        marginTop: 250,
+        margin: 30,
+        padding: 140,
+
+        marginTop: 230,
         alignItems: 'center'
     },
     inputBox: {
-        width: 300,
-        backgroundColor: '#000',
-        opacity: 0.3,
-        borderRadius: 25,
-        paddingHorizontal: 16,
-        fontSize: 16,
+        width: 250,
+        backgroundColor: '#fff4',
+        borderRadius: 5,
+        padding:22,
+        height:16,
+        fontSize: 15,
         color: '#ffffff',
-        marginVertical: 10,
-
+        bottom:110,
+        marginBottom:25,
 
     },
     buttonText: {
         fontSize: 16,
-        fontWeight: '500',
+        height:20,
         color: '#ffffff',
-        marginLeft: 130,
-        paddingVertical: 12
+        marginLeft: 60,
+        bottom:10
     },
     button: {
-        width: 300,
-        backgroundColor: '#1c313a',
-        borderRadius: 25,
-        marginVertical: 20,
-        paddingVertical: 10,
+        width: 200,
+        backgroundColor: '#1c45',
+        borderRadius: 10,
+        marginVertical: 15,
+        paddingVertical: 20,
+        bottom:70
     },
     forgot: {
         color: "blue",

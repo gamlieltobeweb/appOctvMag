@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         // width:100,
         // position:'relative',
         backgroundColor: '#FFE4C4',
-        border: 2,
+        // border: 2,
 
     }, album1: {
         marginRight: 250,
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         height: 50,
         // position:'relative',
         backgroundColor: 'green',
-        border: 2,
+        // border: 2,
 
     },
     text: {

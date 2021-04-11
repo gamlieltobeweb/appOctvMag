@@ -10,7 +10,7 @@ import HomePage from './Home/HomePage'
 
 
 
-import StoreDetails from './Register/StoreDetail'
+import StoreDetails from './Register/StoreDetails'
 import BillingStore from './Register/BillingStore'
 import BrandStores from './Register/BrandStores'
 import DeliveryDetail from './Register/DeliveryDetail'
@@ -34,30 +34,33 @@ export default class App extends Component {
 
       // <View>
 
-      //   <BrandStores/>
+      //   <VerificationNumber/>
       // </View>
       <NavigationContainer>
         <Stack.Navigator>
 
 
-          <Stack.Screen options={{
-            headerStyle: { backgroundColor: '#455a' }, headerTintColor: '#125487', headerTitleStyle: {
+          <Stack.Screen options={{ headerShown: false }}
+           name="Login" component={Login} />
+
+          {/* <Stack.Screen options={{
+            headerStyle: { backgroundColor: '#455a' },  headerTintColor: '#125487', headerTitleStyle: {
               fontWeight: 'bold'
             }, title: "bienvenu"
-          }} name="Login" component={Login} />
+          }} name="Login" component={Login} /> */}
 
-          <Stack.Screen name="StoreDetails" component={StoreDetails} />
-          <Stack.Screen name="SignUp" component={SignUp} />
-          <Stack.Screen name="Forgot" component={Forgot} />
-          <Stack.Screen name="VerificationNumber" component={VerificationNumber} />
-          <Stack.Screen name="VerificationPassword" component={VerificationPassword} />
+          <Stack.Screen options={{ headerShown: false }} name="StoreDetails" component={StoreDetails} />
+          <Stack.Screen options={{ headerShown: false }} name="SignUp" component={SignUp} />
+          <Stack.Screen options={{ headerShown: false }} name="Forgot" component={Forgot} />
+          <Stack.Screen options={{ headerShown: false }} name="VerificationNumber" component={VerificationNumber} />
+          <Stack.Screen options={{ headerShown: false }} name="VerificationPassword" component={VerificationPassword} />
           <Stack.Screen name="Home" component={Home} />
           {/* <Stack.Screen name="HomePage" component={HomePage} /> */}
 
 
-          <Stack.Screen name="BrandStores" component={BrandStores} />
-          <Stack.Screen name="DeliveryDetail" component={DeliveryDetail} />
-          <Stack.Screen name="BillingStore" component={BillingStore} />
+          <Stack.Screen options={{ headerShown: false }} name="BrandStores" component={BrandStores} />
+          <Stack.Screen options={{ headerShown: false }} name="DeliveryDetail" component={DeliveryDetail} />
+          <Stack.Screen options={{ headerShown: false }} name="BillingStore" component={BillingStore} />
 
         </Stack.Navigator>
 

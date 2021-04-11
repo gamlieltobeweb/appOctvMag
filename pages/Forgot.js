@@ -9,8 +9,7 @@ let retour;
 let number;
 let Uemail;
 
-
-export default class Forgot extends Component {
+class Forgot extends Component {
 
     constructor(props) {
         super(props)
@@ -76,12 +75,11 @@ export default class Forgot extends Component {
                     }
                 })
 
-                // .then((response) => console.log("responce",response.data))
 
                 .catch((error) => {
-                    // console.error(error.message);
+             
                     console.log(error.message)
-                    // alert("debile",error.message)
+                
                 });
             return retour
 
@@ -91,7 +89,7 @@ export default class Forgot extends Component {
         return (
             <View style={styles.container}>
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
-                    placeholder="enter your email"
+                    placeholder="Enter Your Email"
                     placeholderTextColor="#ffffff"
                     style={styles.inputBox}
                     selectionColor='#fff'
@@ -114,10 +112,10 @@ export default class Forgot extends Component {
     }
 }
 
-// export default function (props) {
-//     const navigation = useNavigation();
-//     return <Forgot {...props} navigation={navigation} number={number} Uemail = {Uemail} />;
-// }
+export default function (props) {
+    const navigation = useNavigation();
+    return <Forgot {...props} navigation={navigation} number={number} Uemail = {Uemail} />;
+}
 
 const styles = StyleSheet.create({
 
@@ -125,42 +123,37 @@ const styles = StyleSheet.create({
         backgroundColor: "#749890",
         flex: 1,
         justifyContent: 'center',
-        marginLeft:290,
-        // alignContent: 'center',
-        borderRadius: 20,
-        borderColor: "#000",
-        borderWidth: 4,
-        margin: 90,
-        padding: 80,
-        marginLeft: 80,
-        // marginRight: 255,
-        marginTop: 150,
+        borderRadius: 10,
+        borderWidth: 3,
+        padding: 150,
+        marginLeft: 15,
+        marginRight: 15,
+        marginTop: 180,
+        marginBottom:100,
         alignItems: 'center'
     },
     buttonText: {
         fontSize: 16,
-        fontWeight: '500',
         color: '#ffffff',
-        marginLeft: 5,
-        // paddingVertical: 
+        marginLeft: 10,
+        bottom:10
     },
     button: {
-        width: 150,
-        backgroundColor: '#1c313a',
-        borderRadius: 25,
-        marginVertical: 5,
+        width: 120,
+        backgroundColor: '#1c3',
+        borderRadius: 10,
+        marginVertical: 45,
         paddingVertical: 20,
     },
     inputBox: {
-        width: 150,
-        height: 50,
-        backgroundColor: '#000',
+        width: 260,
+        height: 40,
+        backgroundColor: '#021458',
         opacity: 0.3,
-        borderRadius: 25,
-        paddingHorizontal: 16,
-        fontSize: 16,
+        borderRadius: 10,
+        fontSize: 22,
         color: '#ffffff',
-        marginVertical: 10,
+        marginVertical: 50,
         textAlign: 'center'
 
 

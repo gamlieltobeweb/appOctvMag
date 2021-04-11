@@ -1,19 +1,25 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, TextInput, TouchableOpacity, ScrollView } from 'react-native'
-import RNPicker from "rn-modal-picker";
+import { Text, StyleSheet, View, TouchableOpacity, ScrollView, KeyboardAvoidingView, Keyboard, Platform } from 'react-native'
+import { TextInput } from 'react-native-paper';
+import Logo from '../components/Logo'
 
 import { useNavigation } from '@react-navigation/native';
 
 import axios from 'axios'
 
+
 let retour;
 let email;
 
 
-
-export default class StoreDetails extends Component {
+class StoreDetails extends Component {
     constructor(props) {
         super(props)
+        this.myres = React.createRef()
+        this.myres1 = React.createRef()
+        this.myres2 = React.createRef()
+        this.myres3 = React.createRef()
+        this.myres4 = React.createRef()
         this.state = {
             storeName: '',
             NameResponsible: '',
@@ -22,31 +28,9 @@ export default class StoreDetails extends Component {
             emailMagasin: '',
             telephone: '',
             language: 'java',
+            enable: false
         }
     }
-
-    async componentDidMount() {
-
-        await axios.get('http://localhost/Octv/ingoMagasin.php', {
-
-            // succesly entry
-        }).then((response) => {
-            console.log("resppnce datas", response.data)
-            // if (response.data.includes("succesly entry")) {
-            //     console.log("bien reussi")
-            //     result = "succses"
-            // } else {
-            //     return result = "error"
-            // }
-        }).catch(err => {
-            console.log(err)
-        })
-    }
-
-   
-
-
-
     main = async () => {
         let a = await this.userRegister()
         console.log("aaaaaaaa", a)
@@ -66,6 +50,8 @@ export default class StoreDetails extends Component {
     };
     userRegister = async () => {
 
+        console.log("inuserregister")
+
         const { storeName } = this.state;
         const { NameResponsible } = this.state;
         const { storeCode } = this.state;
@@ -73,14 +59,19 @@ export default class StoreDetails extends Component {
         const { emailMagasin } = this.state;
         const { telephone } = this.state;
 
+        console.log("state", this.state)
         if (storeName.length == 0 ||
             NameResponsible.length == 0 ||
             storeCode.length == 0 ||
             storeAdress.length == 0 ||
-            telephone.length == 0 || (!isNaN(telephone))) {
+            telephone.length == 0
+            // || (!isNaN(telephone))
+        ) {
             alert("text input empty")
-        } else {
-
+            console.log("if")
+        }
+        else {
+            console.log("else")
             let Data = {
                 nom: storeName,
                 nom_responsable: NameResponsible,
@@ -89,7 +80,6 @@ export default class StoreDetails extends Component {
                 emailMagasin: emailMagasin,
                 telephone: telephone,
                 email: this.props.route.params.email
-
             }
 
             console.log("dataMagasin", Data)
@@ -97,7 +87,7 @@ export default class StoreDetails extends Component {
                 {
                     data: Data
                 })
-                // .then((response) => console.log("responsestoredata",response.data))
+                // .then((response) => console.log("responsestoredata", response.data))
                 .then((response) => response.data === "new row added" ? retour = "succses" : alert("ereur"))
 
                 .catch((error) => {
@@ -111,24 +101,31 @@ export default class StoreDetails extends Component {
     render() {
 
         return (
-            // <View>
-            <View>
+
+            <KeyboardAvoidingView style={styles.container} behavior={'height'} enabled={this.state.enable}>
+                {/* <Text>Enregistrer Nouveau Magasin</Text> */}
 
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="entrer nom de magasin "
-                    placeholderTextColor="#ffffff"
+                    placeholderTextColor="#000"
                     style={styles.inputBox}
+                    onFocus={() => this.setState({ enable: false })}
                     selectionColor='#fff'
                     returnKeyType="next"
+                    onSubmitEditing={(() => this.myres.current.focus())}
                     onChangeText={storeName => this.setState({ storeName })}
 
                 />
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="entrer nom responsable"
-                    placeholderTextColor="#ffffff"
+                    placeholderTextColor="#000"
                     style={styles.inputBox}
-                    selectionColor='#fff'
+                    selectionColor='#000'
                     returnKeyType="next"
+                    onFocus={() => this.setState({ enable: false })}
+                    // blurOnSubmit={false}
+                    onSubmitEditing={(() => this.myres1.current.focus())}
+                    ref={this.myres}
 
                     onChangeText={NameResponsible => this.setState({ NameResponsible })}
 
@@ -136,49 +133,74 @@ export default class StoreDetails extends Component {
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="entrer Code magasin"
                     returnKeyType="next"
-                    placeholderTextColor="#ffffff"
+                    placeholderTextColor="#000"
                     onChangeText={storeCode => this.setState({ storeCode })}
                     ref={(input) => this.emailinput = input}
                     style={styles.inputBox}
+                    onFocus={() => this.setState({ enable: false })}
+                    onSubmitEditing={(() => this.myres2.current.focus())}
+                    ref={this.myres1}
+                    keyboardType='numeric'
+
+
+
 
                 />
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="entrer votre telephone"
-                    placeholderTextColor="#ffffff"
+                    placeholderTextColor="#000"
                     style={styles.inputBox}
-                    selectionColor='#fff'
+                    selectionColor='#000'
                     returnKeyType="next"
-
+                    onFocus={() => this.setState({ enable: true })}
+                    autoCompleteType='cc-number'
+                    textContentType='telephoneNumber'
                     onChangeText={telephone => this.setState({ telephone })}
+                    onSubmitEditing={(() => this.myres3.current.focus())}
+                    ref={this.myres2}
+                    keyboardType='numeric'
 
                 />
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="entrer adress magasin"
-                    placeholderTextColor="#ffffff"
+                    placeholderTextColor="#000"
                     style={styles.inputBox}
-                    selectionColor='#fff'
+                    selectionColor='#000'
                     returnKeyType="next"
+                    // autoFocus={false}
+                    onFocus={() => this.setState({ enable: true })}
+                    textContentType='addressCity'
 
                     onChangeText={storeAdress => this.setState({ storeAdress })}
+                    onSubmitEditing={(() => this.myres4.current.focus())}
+                    ref={this.myres3}
 
                 />
+
+
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="entrer email magasin"
-                    placeholderTextColor="#ffffff"
+                    placeholderTextColor="#000"
                     style={styles.inputBox}
+                    onFocus={() => this.setState({ enable: true })}
                     selectionColor='#fff'
-                    returnKeyType="next"
-
+                    returnKeyType="go"
+                    onFocus={() => this.setState({ enable: true })}
+                    autoCompleteType='email'
                     onChangeText={emailMagasin => this.setState({ emailMagasin })}
+                    ref={this.myres4}
+                    textContentType='emailAddress'
+                    keyboardType='email-address'
+
 
                 />
-                <RNPicker/>
-               
+
+
 
                 {/* <TouchableOpacity style={styles.button} onPress={this.userRegister}  > */}
                 <TouchableOpacity style={styles.button} onPress={this.main}  >
 
-                    <Text style={styles.buttonText}>Login</Text>
+                    <Text style={styles.buttonText}>Save</Text>
 
 
 
@@ -189,60 +211,63 @@ export default class StoreDetails extends Component {
                     <Image style={styles.image} source={require('../images/logoPlus.png')} />
                 </TouchableOpacity> */}
 
-            </View>
+                {/* </View> */}
+            </KeyboardAvoidingView>
             // </View >
         )
     }
 }
 
-// export default function (props) {
-//     const navigation = useNavigation();
-//     return <StoreDetails {...props} navigation={navigation} />;
-// }
+export default function (props) {
+    const navigation = useNavigation();
+    return <StoreDetails {...props} navigation={navigation} />;
+}
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignContent: 'center',
+        backgroundColor: '#fff',
     },
     inputBox: {
-
-        padding: 20,
-        marginTop: 50,
+        // position:'absolute',
+        borderColor: 'blue',
+        padding: 1,
+        marginTop: 20,
         width: 250,
-        height: 0,
+        height: 50,
         backgroundColor: '#000',
         opacity: 0.3,
         borderRadius: 5,
         // paddingHorizontal: 16,
-        fontSize: 16,
-        color: '#F0FFF0',
+        fontSize: 10,
+        color: '#000',
         marginVertical: 0,
-        margin: 120,
-        top: 0
+        margin: 60,
+        top: 100,
+        fontSize: 20,
 
     },
     buttonText: {
         fontSize: 16,
         fontWeight: 'bold',
         color: '#ffffff',
-        marginLeft: 130,
-        paddingVertical: 12
+        marginLeft: 70,
+        paddingVertical: 8
     },
     button: {
-        width: 300,
-        backgroundColor: '#1c313a',
+        width: 180,
+        backgroundColor: '#006600',
         borderRadius: 10,
-        margin: 90,
+        margin: 140,
         marginLeft: 100,
         // marginRight:40
         // marginVertical: 20,
         // paddingVertical: 10,
     },
     select: {
-        background: '#f2f2f2',
-        border: 1,
+        // border: 1,
         // solid #ddd;
         width: '100',
         height: '60',
