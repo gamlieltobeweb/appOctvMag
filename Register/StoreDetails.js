@@ -41,6 +41,19 @@ class StoreDetails extends Component {
             alert("pas inscris ou ereur de connection")
         }
     }
+    validate = (text) => {
+        console.log(text);
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (reg.test(text) === false) {
+          email = "Email is Not Correct";
+          this.setState({ emailMagasin: text })
+          return false;
+        }
+        else {
+          this.setState({ emailMagasin: text })
+          console.log("Email is Correct");
+        }
+      }
 
     navigateDetails = () => {
 
@@ -64,13 +77,16 @@ class StoreDetails extends Component {
             NameResponsible.length == 0 ||
             storeCode.length == 0 ||
             storeAdress.length == 0 ||
-            telephone.length == 0
+            telephone.length == 0 
             // || (!isNaN(telephone))
         ) {
             alert("text input empty")
             console.log("if")
         }
         else {
+            if (email ==="Email is Not Correct") {
+                alert("Email is Correct")
+            }
             console.log("else")
             let Data = {
                 nom: storeName,
@@ -107,7 +123,7 @@ class StoreDetails extends Component {
 
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="entrer nom de magasin "
-                    placeholderTextColor="#000"
+                    placeholderTextColor="#257898"
                     style={styles.inputBox}
                     onFocus={() => this.setState({ enable: false })}
                     selectionColor='#fff'
@@ -118,9 +134,8 @@ class StoreDetails extends Component {
                 />
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="entrer nom responsable"
-                    placeholderTextColor="#000"
+                    placeholderTextColor="#257898"
                     style={styles.inputBox}
-                    selectionColor='#000'
                     returnKeyType="next"
                     onFocus={() => this.setState({ enable: false })}
                     // blurOnSubmit={false}
@@ -132,8 +147,9 @@ class StoreDetails extends Component {
                 />
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="entrer Code magasin"
+                    selectionColor='#fff'
                     returnKeyType="next"
-                    placeholderTextColor="#000"
+                    placeholderTextColor="#257898"
                     onChangeText={storeCode => this.setState({ storeCode })}
                     ref={(input) => this.emailinput = input}
                     style={styles.inputBox}
@@ -148,9 +164,9 @@ class StoreDetails extends Component {
                 />
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="entrer votre telephone"
-                    placeholderTextColor="#000"
+                    placeholderTextColor="#257898"
                     style={styles.inputBox}
-                    selectionColor='#000'
+                    selectionColor='#fff'
                     returnKeyType="next"
                     onFocus={() => this.setState({ enable: true })}
                     autoCompleteType='cc-number'
@@ -163,9 +179,9 @@ class StoreDetails extends Component {
                 />
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="entrer adress magasin"
-                    placeholderTextColor="#000"
+                    placeholderTextColor="#257898"
                     style={styles.inputBox}
-                    selectionColor='#000'
+                    selectionColor='#fff'
                     returnKeyType="next"
                     // autoFocus={false}
                     onFocus={() => this.setState({ enable: true })}
@@ -180,14 +196,16 @@ class StoreDetails extends Component {
 
                 <TextInput underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="entrer email magasin"
-                    placeholderTextColor="#000"
+                    placeholderTextColor="#257898"
                     style={styles.inputBox}
                     onFocus={() => this.setState({ enable: true })}
                     selectionColor='#fff'
                     returnKeyType="go"
                     onFocus={() => this.setState({ enable: true })}
                     autoCompleteType='email'
-                    onChangeText={emailMagasin => this.setState({ emailMagasin })}
+                    // onChangeText={emailMagasin => this.setState({ emailMagasin })}
+                    onChangeText={(text) => this.validate(text)}
+                    value={this.state.emailMagasin}
                     ref={this.myres4}
                     textContentType='emailAddress'
                     keyboardType='email-address'

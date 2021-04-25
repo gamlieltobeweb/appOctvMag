@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, TouchableOpacity, SafeAreaView, SectionList, StatusBar, ActivityIndicator, Button } from 'react-native'
+import { Text, StyleSheet, View, TouchableOpacity, SafeAreaView, SectionList, StatusBar, ActivityIndicator, Button, Image } from 'react-native'
 import axios from 'axios'
 
 import Logo from '../components/Logo'
 
 const options = ["Apple", "Banana", "Orange"];
 
-let Data ;
+let Data;
 var nameArr = []
 let after;
 let arr = []
@@ -26,6 +26,18 @@ export default class DeliveryDetail extends Component {
             dataSource: [],
             flag: false
         }
+    }
+    addComponent = async () => {
+
+        console.log("Dispositif", this.props.route.params)
+        this.props.navigation.navigate('Dispositif', {
+            email: this.props.route.params.email,
+            event: this.props.route.params.event
+            
+
+        }
+        );
+
     }
     retour = () => {
         this.props.navigation.goBack();
@@ -81,7 +93,7 @@ export default class DeliveryDetail extends Component {
 
             if (this.state.flag) {
 
-                
+
 
 
                 await arr.splice(0, 0, name)
@@ -99,15 +111,20 @@ export default class DeliveryDetail extends Component {
 
         return (
             <View style={styles.container}>
-            <Logo/>
+                <Logo />
                 {/* <View>{this.state.flag ? arr.map((e, i) => { return (<View><Text key={i} style={{ flex: 1, color: "red" }}>{e} </Text></View>) }) :
                  <ActivityIndicator style={styles.activity} size="large" color="#000" />}</View> */}
 
                 <Text style={styles.textview}>details magasin</Text>
-                <View >{this.state.flag ? <Text style={{ flex: 1, color: "red" }}> {temps.map((e, i) =>   <Text style={styles.viewDetail} key ={i}>{`\u2022 ${e}`+"\n"}</Text>)}</Text> : <ActivityIndicator size="large" color="#000" />}</View>
-                <View style={{ bottom:450, margin: 50 }}>
+                <View >{this.state.flag ? <Text style={{ flex: 1, color: "red" }}> {temps.map((e, i) => <Text style={styles.viewDetail} key={i}>{`\u2022 ${e}` + "\n"}</Text>)}</Text> : <ActivityIndicator size="large" color="#000" />}</View>
 
-                    <Button title="retour" color="red"  onPress={this.retour} />
+                <View style={{ bottom: 750, left: 10, right: 20 }}>
+                    <TouchableOpacity onPress={this.addComponent}>
+                        <Text style={styles.dispositif}>choisir dispositif</Text>
+                        <Image style={styles.image} source={require('../images/tel.png')} />
+                    </TouchableOpacity>
+
+                    <Button title="retour" color="red" onPress={this.retour} />
                 </View>
             </View>
 
@@ -119,6 +136,7 @@ export default class DeliveryDetail extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        top: 60,
         backgroundColor: '#A9A900',
         alignItems: 'center',
         // justifyContent: 'center',
@@ -138,21 +156,43 @@ const styles = StyleSheet.create({
     textview: {
         // top:30,
         // bottom: 570,
-        margin:20,
+        margin: 20,
         fontWeight: 'bold',
         color: 'blue'
     },
     activity: {
         top: 120
     },
-    viewDetail:{
-        top:90,
+    viewDetail: {
+        top: 90,
         // padding:150,
         fontWeight: 'bold',
         // alignContent:'center',
-        color:'#025489',
+        color: '#025489',
         // justifyContent:'center',
-        fontSize:18,
+        fontSize: 18,
         // bottom:10
+    },
+    image: {
+        // top: 10,
+        bottom: 30,
+        left: 70,
+        // right: 50,
+        // width: 100,
+        // height: 190,
+        // marginLeft: 1,
+        marginTop: 90,
+
+    }, dispositif: {
+        alignContent: 'center',
+        top: 110,
+        left: 110,
+        fontWeight: 'bold',
+        color: 'black',
+        // right: 50,
+        // width: 100,
+        // height: 190,
+        // marginLeft: 1,
+        marginTop: 90,
     }
 });
