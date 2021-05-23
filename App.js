@@ -15,6 +15,7 @@ import BillingStore from './Register/BillingStore'
 import BrandStores from './Register/BrandStores'
 import DeliveryDetail from './Register/DeliveryDetail'
 import Dispositif from './Register/Dispositif'
+import Video_live from './Register/Video_live'
 
 
 import Login from './pages/Login'
@@ -60,9 +61,10 @@ export default class App extends Component {
 
 
           <Stack.Screen options={{ headerShown: false }} name="BrandStores" component={BrandStores} />
-          <Stack.Screen options={{ headerShown: false }} name="Dispositif" component={Dispositif} />
           <Stack.Screen options={{ headerShown: false }} name="DeliveryDetail" component={DeliveryDetail} />
           <Stack.Screen options={{ headerShown: false }} name="BillingStore" component={BillingStore} />
+          <Stack.Screen options={{ headerShown: false }} name="Dispositif" component={Dispositif} />
+          <Stack.Screen options={{ headerShown: false }} name="Video_live" component={Video_live} />
 
         </Stack.Navigator>
 
