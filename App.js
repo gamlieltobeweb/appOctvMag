@@ -56,7 +56,7 @@ export default class App extends Component {
           <Stack.Screen options={{ headerShown: false }} name="Forgot" component={Forgot} />
           <Stack.Screen options={{ headerShown: false }} name="VerificationNumber" component={VerificationNumber} />
           <Stack.Screen options={{ headerShown: false }} name="VerificationPassword" component={VerificationPassword} />
-          <Stack.Screen name="Home" component={Home} />
+          {/* <Stack.Screen name="Home" component={Home} /> */}
           {/* <Stack.Screen name="HomePage" component={HomePage} /> */}
 
 
@@ -64,7 +64,7 @@ export default class App extends Component {
           <Stack.Screen options={{ headerShown: false }} name="DeliveryDetail" component={DeliveryDetail} />
           <Stack.Screen options={{ headerShown: false }} name="BillingStore" component={BillingStore} />
           <Stack.Screen options={{ headerShown: false }} name="Dispositif" component={Dispositif} />
-          <Stack.Screen options={{ headerShown: false }} name="Video_live" component={Video_live} />
+          {/* <Stack.Screen options={{ headerShown: false }} name="Video_live" component={Video_live} /> */}
 
         </Stack.Navigator>
 
